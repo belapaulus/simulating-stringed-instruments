@@ -1,3 +1,4 @@
+%{
 nstrings = 7;
 nnotes = 4;
 tnote = [0, 1, 2, 3];
@@ -6,5 +7,7 @@ anote = [1, 1, 1, 1];
 inote = [1, 3, 5, 6];
 
 sound = piano(nstrings, nnotes, tnote, dnote, anote, inote);
+%}
 
-soundsc(sound);
+load "take-me-out-to-the-ball-game.m"
+soundsc(sound(1:2:end));
