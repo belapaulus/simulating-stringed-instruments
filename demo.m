@@ -9,5 +9,5 @@ inote = [1, 3, 5, 6];
 sound = piano(nstrings, nnotes, tnote, dnote, anote, inote);
 %}
 
-load "take-me-out-to-the-ball-game.m"
+load "take-me-out-to-the-ball-game.mat"
 soundsc(sound(1:2:end));
