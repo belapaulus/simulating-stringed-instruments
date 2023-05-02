@@ -1,4 +1,4 @@
-function sound = piano(nstrings, tnote, dnote, anote, inote)
+function sound = piano(nstrings, lowfreq, tnote, dnote, anote, inote)
 	% function piano:
 	% simulate a piano with nstrings strings to play nnotes notes
 	% the notes are described in the tnote, dnote, anote and inote arrays
@@ -25,7 +25,6 @@ function sound = piano(nstrings, tnote, dnote, anote, inote)
 	mass_per_length = 1;
 	nspace_steps = 81;
 	space_step = string_length / (nspace_steps - 1);
-	lowfreq = 220;
 	for i = 1:nstrings
 		frequency = lowfreq * 2^((i - 1) / 12);
 		decay_time(i) = 1.2 * (440 / frequency);
