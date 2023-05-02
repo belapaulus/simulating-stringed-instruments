@@ -1,4 +1,4 @@
-function sound = piano(nstrings, nnotes, tnote, dnote, anote, inote)
+function sound = piano(nstrings, tnote, dnote, anote, inote)
 	% function piano:
 	% simulate a piano with nstrings strings to play nnotes notes
 	% the notes are described in the tnote, dnote, anote and inote arrays
@@ -7,7 +7,8 @@ function sound = piano(nstrings, nnotes, tnote, dnote, anote, inote)
 	%	dnote - duration
 	% 	anote - relative amplitude
 	%	inote - index of the string
-	sound = []
+	sound = [];
+	[~, nnotes] = size(tnote);
 
 	% initialize string parameters:
 	% 	string_length - length of the strings
