@@ -39,6 +39,9 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 		a = damping_constant(i) / tension(i);
 		b = space_step^2 / (tension(i) / mass_per_length);
 		dtmax(i) = -a + sqrt(a^2 + b);
+		fprintf("s: %.2i, f: %7.3f, decay: %6.3f, tension: %.3e, damp: %.3f\n", ...
+			i, frequency, decay_time(i), tension(i), ...
+			damping_constant(i));
 	end
 
 	% setting up the timestep and duration of the simulation:
@@ -49,6 +52,7 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 	time_step = sample_step * (1 / nskip);
 	duration = tnote(end) + dnote(end);
 	ntime_steps = ceil(duration / time_step);
+	fprintf("time step: %f, nskip: %f\n", time_step, nskip);
 
 	% relevant indices
 	% 	jstrike - indeces of the pointes hit by the hammer
@@ -66,6 +70,11 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 	tstop = zeros(nstrings, 1);
 	H = zeros(nstrings, nspace_steps);
 	V = zeros(nstrings, nspace_steps);
+
+	% some output on the expected time this will run:
+	fprintf("number of steps: %i\n", ntime_steps);
+	sample_size = 1000000;
+	tic;
 
 	for step = 1:ntime_steps
 		time = step * time_step;
@@ -98,6 +107,16 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 		% sample the sound
 		if (mod(step, nskip) == 0)
 			sound(end+1) = sum(H(:, 2));
+		end
+
+		% some more output on the expected time this will run
+		if (mod(step, sample_size) == 0)
+			time = toc;
+			fprintf("%i steps took %f seconds\n", ...
+				sample_size, time);
+			fprintf("remaining time: %f seconds\n", ...
+				time * (ntime_steps - step) / sample_size);
+			tic;
 		end
 	end
 end
