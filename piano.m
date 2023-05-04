@@ -1,4 +1,4 @@
-function sound = piano(lowfreq, tnote, dnote, anote, inote)
+function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 	% function piano:
 	% simulate a piano with nstrings strings to play nnotes notes
 	% the notes are described in the tnote, dnote, anote and inote arrays
@@ -44,9 +44,9 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote)
 	% setting up the timestep and duration of the simulation:
 	% The timestep of the computation has to be stable for all strings
 	% so the timestep has to be smaller than the smallest dtmax.
-	%	nskip - ?
-	nskip = ceil(1 / (8192 * min(dtmax)));
-	time_step = 1 / (8192 * nskip);
+	sample_step = 1/sample_rate;
+	nskip = ceil(sample_step * (1 / min(dtmax)));
+	time_step = sample_step * (1 / nskip);
 	duration = tnote(end) + dnote(end);
 	ntime_steps = ceil(duration / time_step);
 
