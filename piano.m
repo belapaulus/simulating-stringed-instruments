@@ -28,9 +28,9 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote)
 	space_step = string_length / (nspace_steps - 1);
 	for i = 1:nstrings
 		frequency = lowfreq * 2^((i - 1) / 12);
-		decay_time(i) = 1.2 * (440 / frequency);
 		tension(i) = mass_per_length * ...
 			(2 * string_length * frequency)^2;
+		decay_time(i) = 40 * (lowfreq / frequency);
 		damping_constant(i) = ...
 			(2 * mass_per_length * string_length^2) / ...
 			(decay_time(i) * pi^2);
