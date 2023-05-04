@@ -30,7 +30,7 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 		frequency = lowfreq * 2^((i - 1) / 12);
 		tension(i) = mass_per_length * ...
 			(2 * string_length * frequency)^2;
-		decay_time(i) = 40 * (lowfreq / frequency);
+		decay_time(i) = 2;
 		damping_constant(i) = ...
 			(2 * mass_per_length * string_length^2) / ...
 			(decay_time(i) * pi^2);
@@ -51,6 +51,7 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 	nskip = ceil(sample_step * (1 / min(dtmax)));
 	time_step = sample_step * (1 / nskip);
 	duration = tnote(end) + dnote(end);
+
 	ntime_steps = ceil(duration / time_step);
 	fprintf("time step: %f, nskip: %f\n", time_step, nskip);
 
@@ -81,7 +82,7 @@ function sound = piano(lowfreq, tnote, dnote, anote, inote, sample_rate)
 
 		% strike string
 		while ((n <= nnotes) && (tnote(n) <= time))
-			V(inote(n), jstrike) = anote(n);
+			V(inote(n), jstrike) = anote(n) + (inote(n) / nstrings);
 			tstop(inote(n)) = time + dnote(n);
 			n = n+1;
 		end
